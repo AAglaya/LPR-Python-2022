@@ -25,6 +25,7 @@ def fake_data_generator(seed, vmin=0, vmax=10, size=100):
     fake_y = linear_data + noise
     return fake_x, fake_y
 
+
 n = 2                         #Здесть можно задать порядковый номер студента
 student_number = n
 numbers = get_numbers(student_number)
