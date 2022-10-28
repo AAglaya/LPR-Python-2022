@@ -1,4 +1,4 @@
 import pandas as pd
 
 df = pd.read_csv("telecom_churn.csv")
-print(df['Total day calls'].sum()/df.shape[0])
+print(df['Total day calls'].mean())
