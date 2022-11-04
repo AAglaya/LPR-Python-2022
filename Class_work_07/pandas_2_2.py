@@ -37,7 +37,7 @@ print(df_new2)
 
 nonnull = diamonds.dropna(axis= 0, how= 'any', inplace=False)
 
-print(diamonds.info(), end = '\n \n \n')
+print(diamonds.info())
 print(diamonds.sample(20))
 
 
