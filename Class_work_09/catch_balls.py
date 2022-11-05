@@ -6,13 +6,11 @@ from random import randint
 pygame.init()
 
 FPS = 120
-#finished = False
 screen = pygame.display.set_mode((1200, 900))
 clock = pygame.time.Clock()
 font_style = pygame.font.SysFont(None, 50)
 font_style_start = pygame.font.SysFont(None, 100)
 font_style_finish = pygame.font.SysFont(None, 150)
-level = 0
 
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
@@ -122,13 +120,21 @@ def start_game():
 
 def play_game(level):
     finished = False
-    #level = start_game()
     pygame.display.update()
     clock = pygame.time.Clock()
     num_of_balls = 3
     num_of_triangles = 3
-    timer = 5
+    timer = 100
     score = 0
+    if level == 1:
+        score_for_win = 10
+        speed_boost = 1
+    elif level == 2:
+        score_for_win = 50
+        speed_boost = 1.5
+    elif level == 3:
+        score_for_win = 50
+        speed_boost = 2
     parameters_balls = []
     parameters_triangles = []
     speed_list_balls = []
@@ -143,8 +149,8 @@ def play_game(level):
         clock.tick(FPS)
         screen.fill(BLACK)
         for num_of_ball in range(num_of_balls):
-            parameters_balls[num_of_ball][0] += speed_list_balls[num_of_ball][0]
-            parameters_balls[num_of_ball][1] += speed_list_balls[num_of_ball][1]
+            parameters_balls[num_of_ball][0] += speed_list_balls[num_of_ball][0] * speed_boost
+            parameters_balls[num_of_ball][1] += speed_list_balls[num_of_ball][1] * speed_boost
             if parameters_balls[num_of_ball][0] + parameters_balls[num_of_ball][2] >= 1200 or \
                     parameters_balls[num_of_ball][0] - parameters_balls[num_of_ball][2] <= 0:
                 speed_list_balls[num_of_ball][0] = -speed_list_balls[num_of_ball][0]
@@ -152,8 +158,8 @@ def play_game(level):
                     parameters_balls[num_of_ball][1] - parameters_balls[num_of_ball][2] <= 0:
                 speed_list_balls[num_of_ball][1] = -speed_list_balls[num_of_ball][1]
         for num_of_triangle in range(num_of_triangles):
-            parameters_triangles[num_of_triangle][0] += speed_list_triangles[num_of_triangle][0]
-            parameters_triangles[num_of_triangle][1] += speed_list_triangles[num_of_triangle][1]
+            parameters_triangles[num_of_triangle][0] += speed_list_triangles[num_of_triangle][0] * speed_boost
+            parameters_triangles[num_of_triangle][1] += speed_list_triangles[num_of_triangle][1] * speed_boost
             if parameters_triangles[num_of_triangle][0] + parameters_triangles[num_of_triangle][2] >= 1200 or \
                     parameters_triangles[num_of_triangle][0] <= 0:
                 speed_list_triangles[num_of_triangle][0] = -speed_list_triangles[num_of_triangle][0]
@@ -182,14 +188,14 @@ def play_game(level):
                     b = (x2 - x0) * (y3 - y2) - (x3 - x2) * (y2 - y0)
                     c = (x3 - x0) * (y1 - y3) - (x1 - x3) * (y3 - y0)
                     if (a >= 0 and b >= 0 and c >= 0) or (a <= 0 and b <= 0 and c <= 0):
-                        score += 3
+                        score += 4
                         parameters_triangles[num_of_triangle] = new_triangle()
                         speed_list_triangles[num_of_triangle] = speed()
         timer -= 1 / 120
         score_message(str(score), MAGENTA)
         timer_message(str(int(timer)), MAGENTA)
         pygame.display.update()
-        if score >= 2 and timer >= 0:
+        if score >= score_for_win and timer >= 0:
             win_message(RED)
             finished = True
         elif timer < 0:
