@@ -176,8 +176,8 @@ class Target:
         self.x = rnd.randint(50, 750)
         self.y = rnd.randint(50, 550)
         self.r = rnd.randint(10, 30)
-        self.vx = rnd.randint(0, 30) / 5
-        self.vy = rnd.randint(0, 30) / 5
+        self.vx = rnd.randint(0, 30) / 10
+        self.vy = rnd.randint(0, 30) / 10
         self.color = RED
 
     def hit(self, points=1):
