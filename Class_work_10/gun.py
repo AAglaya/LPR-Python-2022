@@ -23,7 +23,7 @@ HEIGHT = 600
 
 
 class Ball:
-    def __init__(self, screen: pygame.Surface, x=40, y=450):
+    def __init__(self, screen: pygame.Surface, x, y):
         """ Конструктор класса ball
 
         Args:
@@ -37,6 +37,8 @@ class Ball:
         self.r = 10
         self.vx = 0
         self.vy = 0
+        self.vx_pos = 7
+        self.vy_pos = 7
         self.color = choice(GAME_COLORS)
         self.live = 30
 
@@ -109,7 +111,7 @@ class Gun:
         """
         global balls, bullet
         bullet += 1
-        new_ball = Ball(self.screen)
+        new_ball = Ball(self.screen, self.x, self.y)
         new_ball.r += 5
         self.an = math.atan2((event.pos[1]-new_ball.y), (event.pos[0]-new_ball.x))
         new_ball.vx = self.f2_power * math.cos(self.an)
@@ -163,6 +165,7 @@ class Gun:
         '''Отвечает за движение пушки влево'''
         if self.x - self.r >= 20:
             self.x -= self.vx
+
 
 
 class Target:
